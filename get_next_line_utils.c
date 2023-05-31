@@ -28,28 +28,23 @@ int		ft_strcpy(char *str1, char *str2)
 	return (i);
 }
 
-char	*ft_strjoin(int size, char **strs, char *sep)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*res;
-	int		i;
-	int		len;
+	char	*result;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	i = -1;
-	len = 0;
-	if (size == 0)
-		return ((char *)malloc(0));
-	res = (char *)malloc(sizeof(strs) + sizeof(sep) * (size - 1) + 1);
-	if (res)
+	if (!s1 || !s2)
+		return (NULL);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	result = malloc(s1_len + s2_len + 1);
+	if (result)
 	{
-		while (++i < size)
-		{
-			len += ft_strcpy(res + len, strs[i]);
-			if (i < size - 1)
-				len += ft_strcpy(res + len, sep);
-		}
-		*(res + len) = '\0';
+		ft_memcpy(result, s1, s1_len);
+		ft_memcpy(result + s1_len, s2, s2_len + 1);
 	}
-	return (res);
+	return (result);
 }
 
 char	*ft_strdup(const char *s)
@@ -119,5 +114,5 @@ void	ft_straddstr(char **line1, char **line2)
 
 	tmp = *line1;
 	*line1 = ft_strjoin(*line1, *line2);
-	free(*tmp);
+	free(tmp);
 }
