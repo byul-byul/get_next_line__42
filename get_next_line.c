@@ -30,7 +30,7 @@ static int	handle_params(char **line, char buff[BUFFER_SIZE + 1])
 	{
 		if (!*line)
 		{
-			*line = buff;
+			*line = ft_strdup(buff);
 			printf("handle_params(): 5\nline = %s; buff = %s; separator_pos = %d\n", *line, buff, separator_pos);
 		}
 		else
@@ -53,21 +53,22 @@ char		*get_next_line(int fd)
 	char		*line;
 	
 	line = NULL;
-	printf("get_next_line(): 1\nline = %s; buff = %s\n", line, buff);
+	printf("---get_next_line(): 1\nline = %s; buff = %s\n", line, buff);
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	printf("get_next_line(): 2\nline = %s; buff = %s\n", line, buff);
+	printf("---get_next_line(): 2\nline = %s; buff = %s\n", line, buff);
 	if (buff[0] != '\0')
 		if (handle_params(&line, buff) != -1)
 			return (line);
-	printf("get_next_line(): 3\nline = %s; buff = %s\n", line, buff);
+	printf("---get_next_line(): 3\nline = %s; buff = %s\n", line, buff);
 	while (1)
 	{
 		readed_bytes = read(fd, buff, BUFFER_SIZE);
+		printf("---get_next_line(): 4\nline = %s; buff = %s\n", line, buff);
 		if (readed_bytes != -1)
 			if (handle_params(&line, buff) != -1)
 				break ;
 	}
-	printf("get_next_line(): 4\nline = %s; buff = %s\n", line, buff);
+	printf("---get_next_line(): 5\nline = %s; buff = %s\n", line, buff);
 	return (line);
 }

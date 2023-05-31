@@ -22,5 +22,6 @@ char	*ft_substr(char const *str, unsigned int start, size_t len);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_chrinstr(const char *str, int c);
 void	ft_straddstr(char **line1, char **line2);
+char	*ft_strdup(const char *s);
 
 #endif
