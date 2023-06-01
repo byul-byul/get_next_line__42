@@ -13,6 +13,8 @@ int		main(int ac, char **av)
 	(void)av;
 	fd = open("./example.txt", O_RDONLY);
 	line = get_next_line(fd);
-	printf("result of get_next_line():\n%s\n", line);
+	printf("*** RESULT *** get_next_line():\n%s\n\n", line);
+	line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\n%s\n\n", line);
 	return (0);
 }
