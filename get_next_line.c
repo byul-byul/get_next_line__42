@@ -2,89 +2,163 @@
 
 #include "get_next_line.h"
 
-static int	handle_params(char **line, char buff[BUFFER_SIZE + 1])
+// static int	handle_static_buffer(char **line, char buff[BUFFER_SIZE + 1])
+// {
+// 	int		separator_pos;
+// 	char	*tail;
+
+// 	separator_pos = ft_chrinstr(buff, SEPARATOR);
+// 	if (separator_pos != -1)
+// 	{
+// 		if (!*line)
+// 		{
+// 			*line = ft_substr(buff, 0, separator_pos);
+// 		}
+// 		else
+// 		{
+// 			tail = ft_substr(buff, 0, separator_pos);
+// 			ft_straddstr(line, &tail);
+// 		}
+// 		buff[separator_pos] = '\0';
+// 		if (ft_strlen(buff + separator_pos + 1) > 0)
+// 			ft_strcpy(buff, buff + separator_pos);
+// 		else
+// 			buff[0] = '\0';
+// 	}
+// 	else
+// 	{
+// 		if (!*line)
+// 		{
+// 			*line = ft_strdup(buff);
+// 		}
+// 		else
+// 		{
+// 			tail = ft_substr(buff, 0, separator_pos);
+// 			ft_straddstr(line, &tail);
+// 		}
+// 		buff[0] = '\0';
+// 	}
+// 	return (separator_pos);
+// }
+
+// static int	gnl_handler(char **line, char buff[BUFFER_SIZE + 1])
+// {
+// 	char	*tmp;
+// 	int		separator_pos;
+
+// 	if (buff[0] == '\0')
+// 		return (0);
+// 	separator_pos = ft_chrinstr(buff, SEPARATOR);
+// 	if (separator_pos != -1)
+// 	{
+// 		tmp = *line;
+// 		*line = ft_strljoin(*line, buff, ft_strlen(*line), separator_pos);
+// 		free(tmp);
+// 		if (*line)
+// 			return (1);
+// 		else
+// 			return (-1);
+// 	}
+// 	else
+// 	{
+// 		tmp = *line;
+// 		*line = ft_strljoin(*line, buff, ft_strlen(*line), ft_strlen(buff));
+// 		free(tmp);
+// 		return (1);
+// 	}
+// 	if (separator_pos == -1)
+// 	{
+// 		tmp = ft_strjoin(*line, buff);
+// 		free(*line);
+// 		*line = tmp;
+// 		return (0);
+// 	}
+// 	else
+// 	{
+// 		buff[separator_pos] = '\0';
+// 		tmp = ft_strjoin(*line, buff);
+// 		ft_strcpy(buff, buff + separator_pos);
+// 		free(*line);
+// 		*line = tmp;
+// 		return (1);
+// 	}
+// }
+
+static int	update_params(char **line, char buff[BUFFER_SIZE + 1], int pos)
 {
-	int		separator_pos;
-	char	*tail;
+	char	*tmp;
+	int		res;
 
-	// printf("\n- handle_params(): 1 - BEFORE getting separator_pos\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-	separator_pos = ft_chrinstr(buff, SEPARATOR);
-	printf("\n- handle_params(): 2 - AFTER getting separator_pos\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-	if (separator_pos != -1)
+	tmp = *line;
+	if (pos == -1)
 	{
-		printf("- handle_params(): 1-1 - inside if BEFORE\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		if (!*line)
-		{
-			printf("- handle_params(): 1-2 - inside if-if BEFORE ft_substr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-			*line = ft_substr(buff, 0, separator_pos);
-			printf("- handle_params(): 1-3 - inside if-if AFTER ft_substr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		}
-		else
-		{
-			printf("- handle_params(): 1-4 - inside if-else BEFORE ft_straddstr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-			tail = ft_substr(buff, 0, separator_pos);
-			ft_straddstr(line, &tail);
-			printf("- handle_params(): 1-5 - inside if-else AFTER ft_straddstr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		}
-		buff[separator_pos] = '\0';
-		printf("- handle_params(): 1-6 - inside if AFTER\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		// printf("handle_params(): 3--1\nline = %s; buff = %s; separator_pos = %d\n", *line, buff, separator_pos);
-		// printf("handle_params(): 3--2\nline = %s; buff[%d] = %c; separator_pos = %d\n", *line, separator_pos - 1, buff[separator_pos - 1],separator_pos);
-		// printf("handle_params(): 3--3\nline = %s; buff[%d] = %c; separator_pos = %d\n", *line, separator_pos, buff[separator_pos],separator_pos);
-		// printf("handle_params(): 3--4\nline = %s; buff[%d] = %c; separator_pos = %d\n", *line, separator_pos + 1, buff[separator_pos + 1],separator_pos);
-
-		if (ft_strlen(buff + separator_pos + 1) > 0)
-			ft_strcpy(buff, buff + separator_pos);
-		else
-			buff[0] = '\0';
-		printf("- handle_params(): 1-7 - inside if AFTER ft_strcpy()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
+		// printf("-BEFORE operation:\t\t\tpos = %d, line = |%s|, buff = |%s|\n", pos, *line, buff);
+		*line = ft_strljoin(*line, buff, ft_strlen(*line), ft_strlen(buff));
+		buff[0] = '\0';
+		// printf("-AFTER operation:\t\t\tpos = %d, line = |%s|, buff = |%s|\n", pos, *line, buff);
+		res = 0;
+	}
+	else if (pos == 0)
+	{
+		ft_strcpy(buff, buff + pos + 1);
+		*line = ft_strjoin(*line, "\n");
+		res = 1;
 	}
 	else
 	{
-		if (!*line)
-		{
-			printf("- handle_params(): 2-1 - inside else-if BEFORE ft_strdup()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-			*line = ft_strdup(buff);
-			printf("- handle_params(): 2-2 - inside else-if AFTER ft_strdup()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		}
-		else
-		{
-			printf("- handle_params(): 2-3 - inside else-else BEFORE ft_straddstr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-			tail = ft_substr(buff, 0, separator_pos);
-			ft_straddstr(line, &tail);
-			printf("- handle_params(): 2-4 - inside else-else AFTER ft_straddstr()\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-		}
-		buff[0] = '\0';
-		printf("- handle_params(): 2-4 - inside ELSE AFTER \n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
+		// printf("-BEFORE operation:\t\t\tpos = %d, line = |%s|, buff = |%s|\n", pos, *line, buff);
+		*line = ft_strljoin(*line, buff, ft_strlen(*line), pos);
+		ft_strcpy(buff, buff + pos + 1);
+		// printf("-AFTER operation:\t\t\tpos = %d, line = |%s|, buff = |%s|\n", pos, *line, buff);
+		res = 1;
 	}
-	printf("- handle_params(): 3 - END\n\tline = |%s|; buff = |%s|; separator_pos = %d\n", *line, buff, separator_pos);
-	return (separator_pos);
+	free(tmp);
+	if (!*line)
+		res = -1;
+	// printf("-RETURN:\t\t\t\tres = %d\n", res);
+	return (res);
+}
+
+static int	gnl_handler(char **line, char buff[BUFFER_SIZE + 1])
+{
+	int		separator_pos;
+
+	if (buff[0] == '\0')
+		return (0);
+	separator_pos = ft_chrinstr(buff, SEPARATOR);
+	return (update_params(line, buff, separator_pos));
 }
 
 char		*get_next_line(int fd)
 {
-	int			readed_bytes_count;
 	static char	buff[BUFFER_SIZE + 1];
+	int			gnl_handler_result;
+	int			readed_byte_count;
 	char		*line;
+	int			i; // TESTING
 	
-	line = NULL;
-	printf("- get_next_line(): 1 - START\n\tline = |%s|; buff = |%s|;\n", line, buff);
-	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) < 0)
+	readed_byte_count = BUFFER_SIZE;
+	line = malloc(1);
+	if (!line || BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	printf("- get_next_line(): 2 - CHECK SUCCESS\n\tline = |%s|; buff = |%s|;\n", line, buff);
-	if (buff[0] != '\0')
-		if (handle_params(&line, buff) != -1)
-			return (line);
-	printf("- get_next_line(): 3 - BEFORE LOOP\n\tline = |%s|; buff = |%s|;\n", line, buff);
+	else
+		line[0] = '\0';
+	i = 0; //TESTING
 	while (1)
 	{
-		printf("- get_next_line(): 3-1 - INSIDE LOOP BEFORE READ %d BYTES\n\tline = |%s|; buff = |%s|;\n", BUFFER_SIZE, line, buff);
-		readed_bytes_count = read(fd, buff, BUFFER_SIZE);
-		printf("- get_next_line(): 3-2 - INSIDE LOOP AFTER READ %d BYTES\n\tline = |%s|; buff = |%s|;\n", BUFFER_SIZE, line, buff);
-		if (readed_bytes_count != -1)
-			if (handle_params(&line, buff) != -1)
-				break ;
+		i++;
+		// printf("\niter №_%d before handler:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
+		gnl_handler_result = gnl_handler(&line, buff);
+		// printf("iter №_%d after  handler:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
+		if (gnl_handler_result == -1)
+			return (NULL);
+		else if (gnl_handler_result == 1)
+			return (line);
+		if (readed_byte_count == -1)
+			return (NULL);
+		else if (readed_byte_count < BUFFER_SIZE)
+			return (line);
+		readed_byte_count = read(fd, buff, BUFFER_SIZE);
+		// printf("iter №_%d after  reading:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
 	}
-	printf("- get_next_line(): 4 - FINISH\n\tline = |%s|; buff = |%s|;\n", line, buff);
-	return (line);
 }
