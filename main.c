@@ -1,8 +1,8 @@
 // bgadzhil
 
-# include <fcntl.h>		// ONLY FOR TESTING
-
 # include "get_next_line.h"
+# include <fcntl.h>		// ONLY FOR TESTING
+# include <stdio.h>		// ONLY FOR TESTING
 
 int		main(int ac, char **av)
 {
@@ -16,17 +16,5 @@ int		main(int ac, char **av)
 		line = get_next_line(fd);
 		printf("*** RESULT *** get_next_line():\t|%s|\n", line);
 	}
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	// line = get_next_line(fd);
-	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
 	return (0);
 }
