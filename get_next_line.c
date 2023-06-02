@@ -50,9 +50,9 @@ static int	update_params(char **line, char buff[BUFFER_SIZE + 1], int sep_i)
 static int	gnl_handler(char **line, char buff[BUFFER_SIZE + 1])
 {
 	int		separator_index;
-	int		result;					// 0 - a line without separator at the end; 1 - a line with separator at the end; -1 - error;
-
-	if (!(*line))
+	int		result;					//  0 - a line without separator at the end;
+									//  1 - a line with separator at the end;
+	if (!(*line))					// -1 - an error occured.
 	{
 		*line = malloc(1);
 		if (*line)
