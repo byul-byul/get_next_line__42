@@ -9,20 +9,24 @@ int		main(int ac, char **av)
 	int		fd;
 	char	*line;
 
-	(void)ac;
-	(void)av;
 	fd = open("./example.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
-	line = get_next_line(fd);
-	printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	line = av[ac - 1];
+	while (line)
+	{
+		line = get_next_line(fd);
+		printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	}
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+	// line = get_next_line(fd);
+	// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
 	return (0);
 }

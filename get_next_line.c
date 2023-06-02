@@ -24,16 +24,12 @@ static int	update_params(char **line, char buff[BUFFER_SIZE + 1], int sep_i)
 {
 	char	*tmp;
 	int		res;
-	// int		len;
 
 	tmp = *line;
 	if (sep_i == -1)
 	{
-		// printf("-BEFORE operation:\t\t\tsep_i = %d, line = |%s|, buff = |%s|\n", sep_i, *line, buff);
 		*line = ft_strljoin(*line, buff, ft_strlen(*line), ft_strlen(buff));
-		// buff[0] = '\0';
 		update_static_buff(buff, BUFFER_SIZE);
-		// printf("-AFTER operation:\t\t\tsep_i = %d, line = |%s|, buff = |%s|\n", sep_i, *line, buff);
 		res = 0;
 	}
 	else
@@ -45,28 +41,9 @@ static int	update_params(char **line, char buff[BUFFER_SIZE + 1], int sep_i)
 		update_static_buff(buff, sep_i);
 		res = 1;
 	}
-	// else if (sep_i == 0)
-	// {
-	// 	// ft_strcpy(buff, buff + sep_i + 1);
-	// 	*line = ft_strjoin(*line, "\n");
-	// 	update_static_buff(buff, sep_i);
-	// 	res = 1;
-	// }
-	// else
-	// {
-	// 	// printf("-BEFORE operation:\t\t\tsep_i = %d, line = |%s|, buff = |%s|\n", sep_i, *line, buff);
-	// 	*line = ft_strljoin(*line, buff, ft_strlen(*line), sep_i);
-	// 	update_static_buff(buff, sep_i);
-	// 	// len = ft_strlen(buff) - sep_i - 1;
-	// 	// ft_strcpy(buff, buff + sep_i + 1);
-	// 	// buff[len] = '\0';
-	// 	// printf("-AFTER operation:\t\t\tsep_i = %d, line = |%s|, buff = |%s|\n", sep_i, *line, buff);
-	// 	res = 1;
-	// }
 	free(tmp);
 	if (!*line)
 		res = -1;
-	// printf("-RETURN:\t\t\t\tres = %d\n", res);
 	return (res);
 }
 
@@ -83,8 +60,6 @@ static int	gnl_handler(char **line, char buff[BUFFER_SIZE + 1])
 		else
 			return (-1);
 	}
-	// if (buff[0] == '\0')
-	// 	return (0);
 	separator_index = ft_chrinstr(buff, SEPARATOR);
 	result = update_params(line, buff, separator_index);
 	return (result);
@@ -103,7 +78,6 @@ char		*get_next_line(int fd)
 	int			gnl_handler_result;
 	int			readed_byte_count;
 	char		*line;
-	int			i = 0; // TESTING
 	
 	line = NULL;
 	readed_byte_count = 0;
@@ -111,20 +85,15 @@ char		*get_next_line(int fd)
 		return (NULL);
 	while (1)
 	{
-		i++;
-		// printf("\niter №_%d before reading:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
 		if (buff[0] == '\0')
 		{
 			readed_byte_count = read(fd, buff, BUFFER_SIZE);
-			// printf("iter №_%d after  reading:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
 			if (readed_byte_count < 0 || (readed_byte_count == 0 && !line))
 				return (free_and_exit(line));
 			if (readed_byte_count == 0 && line)
 				return (line);
 		}
-		// printf("iter №_%d before handler:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
 		gnl_handler_result = gnl_handler(&line, buff);
-		// printf("iter №_%d after  handler:\t\tline = |%s|, buff = |%s|\n", i, line, buff);
 		if (gnl_handler_result == -1)
 			return (free_and_exit(line));
 		if (gnl_handler_result == 1)

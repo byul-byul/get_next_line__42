@@ -2,17 +2,6 @@
 
 #include "get_next_line.h"
 
-
-int		ft_strcpy(char *str1, char *str2)
-{
-	int	i;
-
-	i = -1;
-	while (str2[++i])
-		str1[i] = str2[i];
-	return (i);
-}
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
@@ -66,59 +55,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-char	*ft_strdup(const char *s)
-{
-	char	*result;
-	size_t	size;
-
-	size = ft_strlen(s) + 1;
-	result = (char *)malloc(size);
-	if (result)
-		ft_memcpy(result, s, size);
-	return (result);
-}
-
-
-char	*ft_substr(char const *str, unsigned int start, size_t len)
-{
-	char	*result;
-	size_t	str_len;
-
-	if (!str)
-		return (NULL);
-	str_len = ft_strlen(str);
-	if (start > str_len)
-		return (ft_strdup(""));
-	str_len -= start;
-	str += start;
-	if (len >= str_len)
-		return (ft_strdup(str));
-	result = malloc(len + 1);
-	if (result)
-	{
-		ft_memcpy(result, str, len);
-		result[len] = '\0';
-	}
-	return (result);
-}
-
 int		ft_chrinstr(const char *str, int c)
 {
 	int	i;
 
 	i = -1;
-	// printf("ft_chrinstr() has as a parameter c = %d and c = %c\n ans str = %s\n", c, c, str);
 	while (str[++i])
 		if (str[i] == (char)c)
 			return (i);
 	return (-1);
-}
-
-void	ft_straddstr(char **line1, char **line2)
-{
-	char	*tmp;
-
-	tmp = *line1;
-	*line1 = ft_strjoin(*line1, *line2);
-	free(tmp);
 }
