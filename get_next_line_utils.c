@@ -2,6 +2,28 @@
 
 #include "get_next_line.h"
 
+size_t	ft_strcpy(char *dst, const char *src)
+{
+	if (!dst)
+		return (0);
+	while (*src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (ft_strlen(src));
+}
+
+char	*ft_strdup(const char *str)
+{
+	char	*result;
+	size_t	size;
+
+	size = ft_strlen(str) + 1;
+	result = (char *)malloc(size);
+	if (result)
+		ft_memcpy(result, str, size);
+	return (result);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
@@ -61,6 +83,18 @@ int		ft_chrinstr(const char *str, int c)
 
 	i = -1;
 	while (str[++i])
+		if (str[i] == (char)c)
+			return (i);
+	return (-1);
+}
+
+size_t	ft_findcharl(const char *str, int c, size_t len)
+{
+	size_t	i;
+
+	i = -1;
+	// printf("ft_chrinstr() has as a parameter c = %d and c = %c\n ans str = %s\n", c, c, str);
+	while (++i < len)
 		if (str[i] == (char)c)
 			return (i);
 	return (-1);
