@@ -12,12 +12,14 @@ int		main(int ac, char **av)
 
 	fd = open("./example.txt", O_RDONLY);
 	line = av[ac - 1];
-	while (line)
+	while ((line = get_next_line(fd)))
 	{
-		line = get_next_line(fd);
+		// line = get_next_line(fd);
+		printf("%s", line);
 		// printf("\n\n*** ****** ***\n");
-		printf("*** RESULT *** get_next_line():\t|%s|\n", line);
+		// printf("*** RESULT *** get_next_line():\t|%s|\n", line);
 		// printf("*** ****** ***\n\n");
 	}
+	printf("\n");
 	return (0);
 }
